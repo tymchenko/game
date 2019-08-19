@@ -1,6 +1,7 @@
 package com.game.services;
 
 import com.game.entities.Artifact;
+import com.game.entities.Hero;
 import com.game.entities.Monster;
 import com.game.entities.Powerable;
 import com.game.hall.Door;
@@ -47,4 +48,24 @@ public class Printer {
 		return message;
 	}
 
+	public void printNumberOfDoorsWithDeath(Hall hall, Hero hero) {
+		List<Door> doors = hall.getDoors();
+		int numberOfDeathDoors = 0;
+		for(Door door : doors){
+			if(isDeath(door, hero)){
+				++numberOfDeathDoors;
+			}
+		}
+		System.out.println(String.format("Number of doors with death: %s", numberOfDeathDoors));
+	}
+
+	private boolean isDeath(Door door, Hero hero) {
+		Powerable entity = door.getEntity();
+		if(entity instanceof Monster){
+			if (((Monster) entity).getPower() > hero.getPower()) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
