@@ -7,6 +7,7 @@ import com.game.entities.Powerable;
 import com.game.hall.Door;
 import com.game.hall.Hall;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class Printer {
@@ -67,5 +68,57 @@ public class Printer {
 			}
 		}
 		return false;
+	}
+
+	public void printWinPath(Hall hall, Hero hero) {
+		List<Artifact> artifacts = fetchArtfacts(hall.getDoors());
+		List<Monster> monsters = fetchMonsters(hall.getDoors());
+		int winPoints = fetchWinPoints(artifacts);
+		int deathPoints = fetchDeathPoints(monsters);
+		if(winPoints < deathPoints){
+			System.out.println("Victory is impossible.");
+			System.exit(0);
+		}
+
+	}
+
+	private int fetchDeathPoints(List<Monster> monsters) {
+		int sum = 0;
+		for(Monster monster : monsters){
+			sum += monster.getPower();
+		}
+		return sum;
+	}
+
+	private int fetchWinPoints(List<Artifact> artifacts) {
+		int sum = 0;
+		for(Artifact artifact : artifacts){
+			sum += artifact.getPower();
+		}
+		return sum;
+	}
+
+
+
+	private List<Artifact> fetchArtfacts(List<Door> doors) {
+		List<Artifact> artifacts = new LinkedList<>();
+		for(Door door : doors){
+			if(door.getEntity() instanceof Artifact){
+				Artifact artifact = (Artifact) door.getEntity();
+				artifacts.add(artifact);
+			}
+		}
+		return artifacts;
+	}
+
+	private List<Monster> fetchMonsters(List<Door> doors) {
+		List<Monster> monsters = new LinkedList<>();
+		for(Door door : doors){
+			if(door.getEntity() instanceof Monster){
+				Monster monster = (Monster) door.getEntity();
+				monsters.add(monster);
+			}
+		}
+		return monsters;
 	}
 }

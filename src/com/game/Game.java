@@ -19,6 +19,7 @@ public class Game {
 		Hall hall = new Hall();
 		printer.printHallInformation(hall);
 		printer.printNumberOfDoorsWithDeath(hall, hero);
+		printer.printWinPath(hall, hero);
 		boolean isAlive = true;
 		while (isAlive) {
 			int doorNumber = communicator.askDoorNumber();
