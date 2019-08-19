@@ -36,7 +36,7 @@ public class Communicator {
 
 	private boolean validateLine(String answer) {
 		char [] answerArray = answer.toCharArray();
-		if(answer.length() > 2){
+		if(answer.length() > 2 || answer.length() < 1){
 			return false;
 		}
 		for(int i = 0; i < answerArray.length; i++){

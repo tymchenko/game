@@ -37,7 +37,8 @@ public class EntityService {
 
 	private static boolean isArtifact() {
 		Random random = new Random();
-		return random.nextInt() % 2 > 0;
+		int number = random.nextInt(2) + 1;
+		return number % 2 > 0;
 	}
 
 	public int generatePower(Powerable entity){

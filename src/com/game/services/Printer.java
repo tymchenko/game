@@ -73,13 +73,49 @@ public class Printer {
 	public void printWinPath(Hall hall, Hero hero) {
 		List<Artifact> artifacts = fetchArtfacts(hall.getDoors());
 		List<Monster> monsters = fetchMonsters(hall.getDoors());
-		int winPoints = fetchWinPoints(artifacts);
+		int winPoints = fetchWinPoints(artifacts) + hero.getPower();
 		int deathPoints = fetchDeathPoints(monsters);
 		if(winPoints < deathPoints){
 			System.out.println("Victory is impossible.");
 			System.exit(0);
 		}
+		detectVictoryPath(hall, hero);
+	}
 
+	private void detectVictoryPath(Hall hall, Hero hero) {
+		List<Integer> artifactIndexes = fetchArtfactIndexes(hall.getDoors());
+		List<Integer> monsterIndexes = fetchMonsterIndexes(hall.getDoors());
+		System.out.print("Victory path : ");
+		StringBuilder builder = new StringBuilder();
+		for(Integer index : artifactIndexes){
+			builder.append(index + 1 + ", ");
+		}
+		for(Integer index : monsterIndexes){
+			builder.append(index + 1 + ", ");
+		}
+		String path = new String(builder.toString());
+		path = new String(path.toCharArray(), 0, path.length() -2);
+		System.out.println(path);
+	}
+
+	private List<Integer> fetchArtfactIndexes(List<Door> doors) {
+		List<Integer> indexes = new LinkedList<>();
+		for(int i = 0; i < doors.size(); i++){
+			if(doors.get(i).getEntity() instanceof Artifact){
+				indexes.add(i);
+			}
+		}
+		return indexes;
+	}
+
+	private List<Integer> fetchMonsterIndexes(List<Door> doors) {
+		List<Integer> indexes = new LinkedList<>();
+		for(int i = 0; i < doors.size(); i++){
+			if(doors.get(i).getEntity() instanceof Monster){
+				indexes.add(i);
+			}
+		}
+		return indexes;
 	}
 
 	private int fetchDeathPoints(List<Monster> monsters) {
