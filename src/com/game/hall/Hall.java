@@ -1,10 +1,22 @@
 package com.game.hall;
 
+import com.game.services.EntityService;
+
 import java.util.List;
-import java.util.Arrays;
 
 public class Hall {
 	private static final int DOORS_IN_HALL = 10;
-	List<Door> doors = Arrays.asList(new Door[DOORS_IN_HALL]);
+	List<Door> doors;
 
+	public Hall() {
+		this.doors = EntityService.getInstance().generateDoors();
+	}
+
+	public void setDoors(List<Door> doors) {
+		this.doors = doors;
+	}
+
+	public List<Door> getDoors() {
+		return doors;
+	}
 }

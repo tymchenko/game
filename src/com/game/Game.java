@@ -1,15 +1,13 @@
 package com.game;
 
 import com.game.hall.Hall;
+import com.game.services.Printer;
 
 public class Game {
 
 	public void start() {
-		createHall();
-		System.out.println("Start");
+		Hall hall = new Hall();
+		Printer.getInstance().printHallInformation(hall);
 	}
 
-	private void createHall() {
-		Hall hall = new Hall();
-	}
 }

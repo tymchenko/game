@@ -1,14 +1,19 @@
 package com.game.services;
 
+import com.game.entities.Artifact;
 import com.game.entities.Monster;
 import com.game.entities.Powerable;
+import com.game.hall.Door;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 
-public class PowerGenerator {
-	private static PowerGenerator generator = new PowerGenerator();
+public class EntityService {
+	private static EntityService generator = new EntityService();
 
+	private static final int NUMBER_OF_DOORS = 10;
 	private static final int MIN_ARTIFACT_POWER = 10;
 	private static final int MAX_ARTIFACT_POWER = 80;
 	private static final int MIN_MONSTER_POWER = 5;
@@ -16,11 +21,23 @@ public class PowerGenerator {
 
 	private Random random = new Random();
 
-	private PowerGenerator() {
+	private EntityService() {
 	}
 
-	public PowerGenerator getInstance(){
+	public static EntityService getInstance(){
 		return generator;
+	}
+
+	public static Powerable createEntity() {
+		if(isArtifact()){
+			return new Artifact();
+		}
+		return new Monster();
+	}
+
+	private static boolean isArtifact() {
+		Random random = new Random();
+		return random.nextInt() % 2 > 0;
 	}
 
 	public int generatePower(Powerable entity){
@@ -37,5 +54,13 @@ public class PowerGenerator {
 	private int generateArtifactPower() {
 		return MIN_ARTIFACT_POWER + (int) (Math.random() * MAX_ARTIFACT_POWER);
 
+	}
+
+	public List<Door> generateDoors() {
+		List <Door> doors = new LinkedList<>();
+		for(int i = 0; i < NUMBER_OF_DOORS; i++){
+			doors.add(new Door());
+		}
+		return doors;
 	}
 }
